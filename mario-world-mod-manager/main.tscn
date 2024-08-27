@@ -1,6 +1,68 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgcxa3dfylasd"]
+[gd_scene load_steps=16 format=3 uid="uid://dgcxa3dfylasd"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_bsrak"]
+[ext_resource type="Texture2D" uid="uid://c0qgg16dnqmfd" path="res://BG.png" id="2_dioib"]
+[ext_resource type="FontFile" uid="uid://dctusgd6i71lc" path="res://SMW Text NC.ttf" id="3_ygnff"]
+[ext_resource type="Texture2D" uid="uid://bs57bie5c4nrc" path="res://Button3.png" id="4_s25qk"]
+[ext_resource type="Texture2D" uid="uid://c3q3evknly87d" path="res://Button.png" id="4_vnp5s"]
+[ext_resource type="Texture2D" uid="uid://27ja71l5542y" path="res://Button2.png" id="5_5kc2s"]
+[ext_resource type="AudioStream" uid="uid://bvk4et08vwkut" path="res://fireball.wav" id="7_cnrpb"]
+[ext_resource type="AudioStream" uid="uid://d05tfuxhyet0r" path="res://coin.wav" id="8_eyrba"]
+
+[sub_resource type="Shader" id="Shader_6a281"]
+code = "shader_type canvas_item;
+
+uniform vec2 motion = vec2(0.0);
+uniform float scale = 1.0;
+uniform vec2 offset = vec2(0.0);
+
+void vertex(){
+	UV = (VERTEX + offset + TIME * motion) * TEXTURE_PIXEL_SIZE * (1.0/scale);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_egn5h"]
+shader = SubResource("Shader_6a281")
+shader_parameter/motion = Vector2(4, 4)
+shader_parameter/scale = 1.0
+shader_parameter/offset = Vector2(0, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1qtta"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2xidm"]
+texture = ExtResource("4_vnp5s")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e3bjt"]
+texture = ExtResource("5_5kc2s")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4tgko"]
+texture = ExtResource("4_vnp5s")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xefjc"]
+texture = ExtResource("4_s25qk")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="Manager" type="Control"]
 layout_mode = 3
@@ -10,6 +72,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bsrak")
+
+[node name="BG" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_egn5h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dioib")
+stretch_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -26,12 +99,60 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
-[node name="Container" type="VBoxContainer" parent="VBoxContainer"]
+[node name="Container" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 
+[node name="Button3" type="Button" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_ygnff")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1qtta")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2xidm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e3bjt")
+theme_override_styles/normal = SubResource("StyleBoxTexture_4tgko")
+text = "Refresh"
+
 [node name="Button" type="Button" parent="VBoxContainer/Container"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_ygnff")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1qtta")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xefjc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e3bjt")
+theme_override_styles/normal = SubResource("StyleBoxTexture_xefjc")
 text = "Save"
 
+[node name="Button2" type="Button" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_ygnff")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1qtta")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2xidm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e3bjt")
+theme_override_styles/normal = SubResource("StyleBoxTexture_4tgko")
+text = "Toggle All"
+
+[node name="ToggleAll" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_cnrpb")
+
+[node name="Save" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_eyrba")
+
+[connection signal="pressed" from="VBoxContainer/Container/Button3" to="." method="refresh_list"]
 [connection signal="pressed" from="VBoxContainer/Container/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Button" to="Save" method="play"]
+[connection signal="pressed" from="VBoxContainer/Container/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Button2" to="ToggleAll" method="play"]

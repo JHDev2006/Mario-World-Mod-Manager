@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://chj8l55teal8x"]
+[gd_scene load_steps=6 format=3 uid="uid://chj8l55teal8x"]
+
+[ext_resource type="Texture2D" uid="uid://ca5aonftxj20h" path="res://Check.png" id="1_kd3g5"]
+[ext_resource type="FontFile" uid="uid://dctusgd6i71lc" path="res://SMW Text NC.ttf" id="1_ue0vm"]
+[ext_resource type="Texture2D" uid="uid://27ja71l5542y" path="res://Button2.png" id="2_rv81e"]
+[ext_resource type="AudioStream" uid="uid://cp2at6u3oevn4" path="res://map-spot.wav" id="4_3np6a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ramcf"]
 
 [node name="ModContainer" type="HBoxContainer"]
 offset_right = 40.0
@@ -6,7 +13,19 @@ offset_bottom = 40.0
 
 [node name="CheckBox" type="CheckBox" parent="."]
 layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ramcf")
+theme_override_icons/checked = ExtResource("1_kd3g5")
+theme_override_icons/unchecked = ExtResource("2_rv81e")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("1_ue0vm")
+theme_override_font_sizes/font_size = 10
 text = "Test Mod Name"
+
+[node name="Check" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3np6a")
+
+[connection signal="pressed" from="CheckBox" to="Check" method="play"]
